@@ -1,0 +1,10 @@
+{
+  "name": "mohdos",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Mohammad Arab's portfolio. A tiny desktop OS in vanilla JS.",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0"
+  }
+}
