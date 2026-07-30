@@ -222,6 +222,7 @@ const APPS = {
       <p style="font-family:var(--mono);font-size:12px">2.0 · rebuilt the design, fixed 27 bugs, taught the terminal snake<br>1.0 · glassmorphism era. see recycle bin.</p>
       <div class="contact-actions">
         <button class="btn ghost" onclick="wm.open('terminal');">view source: type 'src wm.js'</button>
+        <a class="btn ghost" href="https://github.com/moha-arab/portfolio" target="_blank" rel="noopener">github repo</a>
       </div>
       <p style="margin-top:10px">© 2026 Mohammad Arab</p>`,
   },
