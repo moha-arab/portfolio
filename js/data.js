@@ -1,17 +1,21 @@
 /* ============================================================
    ALL SITE CONTENT LIVES HERE. Edit this file, refresh, done.
-   Everything renders automatically — add a skill, it appears.
+   Empty string fields ("") render as visible "soon" slots, so
+   you can fill them in later without touching anything else.
    ============================================================ */
 
 const PROFILE = {
   name: "mohammad arab",
   photo: "assets/me.jpg",
-  // one line under your name. keep it short.
   tagline: "computer science student who ships real software.",
+  now: "currently building jinto.gg · looking for my next co-op term",
   email: "mohd.e.arab@gmail.com",
   github: "https://github.com/moha-arab",
-  // paste your LinkedIn URL between the quotes and it appears automatically:
+  // paste your LinkedIn PROFILE url (linkedin.com/in/...) between the quotes:
   linkedin: "",
+  // when you have a resume pdf, drop it in assets/ and put the path here,
+  // e.g. "assets/resume.pdf" — the button switches from email to download:
+  resume: "",
   education: {
     school: "Queen's University",
     degree: "B.Comp. (Hons.), Computer Science",
@@ -32,6 +36,7 @@ const EXPERIENCE = [
       "Built a RAG-based educational search engine for a groundwater-education nonprofit.",
       "Added a tutor mode on top, and learned what an LLM token bill looks like when real users show up.",
     ],
+    brand: { color: "#4fb3c6", icon: "water" },
   },
   {
     role: "Software Engineer Intern",
@@ -41,6 +46,7 @@ const EXPERIENCE = [
     points: [
       "Built an iOS App Store optimization tool as a web app.",
     ],
+    brand: { color: "#6fbf8a", icon: "chart" },
   },
   {
     role: "Software Developer",
@@ -50,6 +56,7 @@ const EXPERIENCE = [
     points: [
       "Worked with a team on a live occupancy tracker for the campus gym, cafeteria and library.",
     ],
+    brand: { color: "#fabd0f", icon: "gear" },
   },
 ];
 
@@ -57,22 +64,24 @@ const PROJECTS = [
   {
     id: "jinto",
     name: "jinto.gg",
+    link: "https://jinto.gg",
     status: "in development",
     tagline: "an AI coach for Valorant",
     desc: "A live overlay that coaches mid-match like a duo partner: what to buy this round, why you died, what to try next. Round events and match context feed an LLM pipeline that turns raw game state into short, specific advice.",
     footnote: "built · riot developer application pending · waitlist forming",
     stack: ["TypeScript", "live overlay", "Riot API", "LLM pipeline"],
-    theme: { accent: "#e8574a", bg: "#150c0a", motif: "crosshair" },
+    theme: { accent: "#ff4655", bg: "#0f1923", ghost: "JINTO", motif: "crosshair" },
   },
   {
     id: "yapstage",
     name: "YapStage",
+    link: "", // paste the YapStage url here when you send it
     status: "live",
     tagline: "1v1 video debates, judged by AI",
     desc: "Two people, one topic, live video over WebRTC, and an AI judge that scores structure, evidence and rebuttals. Launched with public matchmaking, then pivoted to private lobbies when the concurrent-user math didn't work yet.",
     footnote: "live · private lobbies · cold-start lessons included free",
     stack: ["WebRTC", "Node.js", "TURN", "LLM judging"],
-    theme: { accent: "#6f8fd4", bg: "#0b0e16", motif: "stage" },
+    theme: { accent: "#9d8cff", bg: "#0d0a1a", ghost: "VS", motif: "stage" },
   },
 ];
 
