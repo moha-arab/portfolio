@@ -78,21 +78,27 @@
   function projectsPane() {
     const proj = PROJECTS.find((p) => p.id === currentProject) || PROJECTS[0];
     const t = proj.theme;
-    const art = t.motif === "crosshair"
-      ? `<i class="slash s1"></i><i class="slash s2"></i>
+    const MOTIF_ART = {
+      crosshair: `<i class="slash s1"></i><i class="slash s2"></i>
          <svg class="rings" viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="1.4">
            <circle cx="150" cy="150" r="130"/><circle cx="150" cy="150" r="85"/><circle cx="150" cy="150" r="40"/>
-           <path d="M150 0v70M150 230v70M0 150h70M230 150h70"/></svg>`
-      : `<i class="beam b1"></i><i class="beam b2"></i>
+           <path d="M150 0v70M150 230v70M0 150h70M230 150h70"/></svg>`,
+      stage: `<i class="beam b1"></i><i class="beam b2"></i>
          <svg class="bubbles" viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="2">
            <path d="M10 20c0-6 5-10 10-10h50c6 0 10 4 10 10v30c0 6-4 10-10 10H40l-16 14v-14h-4c-6 0-10-4-10-10V20z"/>
-           <path d="M120 40c0-6 5-10 10-10h50c6 0 10 4 10 10v30c0 6-4 10-10 10h-4v14l-16-14h-30c-6 0-10-4-10-10V40z"/></svg>`;
+           <path d="M120 40c0-6 5-10 10-10h50c6 0 10 4 10 10v30c0 6-4 10-10 10h-4v14l-16-14h-30c-6 0-10-4-10-10V40z"/></svg>`,
+      wave: `<svg class="wavebars" viewBox="0 0 240 120" stroke="currentColor" stroke-width="7" stroke-linecap="round">
+           ${[22, 46, 72, 96, 58, 82, 36, 66, 92, 48, 74, 30, 56, 40].map((h, i) => `<line x1="${12 + i * 16}" y1="${60 - h / 2}" x2="${12 + i * 16}" y2="${60 + h / 2}"/>`).join("")}</svg>`,
+    };
+    const art = MOTIF_ART[t.motif] || "";
     const name = proj.link
       ? `<a class="proj-name" href="${esc(proj.link)}" target="_blank" rel="noopener">${esc(proj.name)}<span class="ext">↗</span></a>`
       : `<span class="proj-name">${esc(proj.name)}</span>`;
-    const visit = proj.link
-      ? `<a class="btn" href="${esc(proj.link)}" target="_blank" rel="noopener">visit ${esc(proj.name)} ↗</a>`
-      : `<a class="btn ghost" href="mailto:${esc(PROFILE.email)}?subject=${encodeURIComponent("show me " + proj.name)}">ask for a demo</a>`;
+    const actions = [
+      proj.link ? `<a class="btn" href="${esc(proj.link)}" target="_blank" rel="noopener">visit ${esc(proj.name)} ↗</a>` : "",
+      proj.repo ? `<a class="btn ghost" href="${esc(proj.repo)}" target="_blank" rel="noopener">view code ↗</a>` : "",
+      !proj.link && !proj.repo ? `<a class="btn ghost" href="mailto:${esc(PROFILE.email)}?subject=${encodeURIComponent("show me " + proj.name)}">ask for a demo</a>` : "",
+    ].join("");
     return `
       <h2>projects</h2>
       <div class="proj-switch" role="tablist">
@@ -105,7 +111,7 @@
           <p class="lede">${esc(proj.tagline)}</p>
           <p class="desc">${esc(proj.desc)}</p>
           <div class="chips">${proj.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div>
-          <div class="proj-actions">${visit}</div>
+          <div class="proj-actions">${actions}</div>
           <div class="foot-note">${esc(proj.footnote)}</div>
         </div>
       </article>`;
@@ -129,7 +135,17 @@
     if (projectId && PROJECTS.some((p) => p.id === projectId)) currentProject = projectId;
     view.innerHTML = `<div class="pane">${PANES[id]()}</div>`;
     for (const b of tabsEl.children) b.classList.toggle("on", b.dataset.tab === id);
-    document.body.dataset.theme = id === "projects" ? currentProject : "";
+    // theme colors come straight from data.js, so new projects theme themselves
+    if (id === "projects") {
+      const proj = PROJECTS.find((p) => p.id === currentProject) || PROJECTS[0];
+      document.body.dataset.theme = proj.id;
+      document.body.style.setProperty("--accent", proj.theme.accent);
+      document.body.style.setProperty("--bg", proj.theme.bg);
+    } else {
+      document.body.dataset.theme = "";
+      document.body.style.removeProperty("--accent");
+      document.body.style.removeProperty("--bg");
+    }
     history.replaceState(null, "", "#" + (id === "projects" ? currentProject : id));
     // staggered reveal
     const kids = view.querySelectorAll(".pane > *, .hero-text > *");

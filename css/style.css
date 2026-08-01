@@ -20,8 +20,7 @@
   --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
   --ease: cubic-bezier(0.2, 0.8, 0.25, 1);
 }
-body[data-theme="jinto"] { --accent: #ff4655; --bg: #0f1923; }
-body[data-theme="yapstage"] { --accent: #9d8cff; --bg: #0d0a1a; }
+/* project theme colors are set from js/data.js at runtime */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -213,6 +212,9 @@ p { line-height: 1.65; color: var(--soft); }
 .proj .beam.b1 { right: 22%; transform: rotate(14deg); }
 .proj .beam.b2 { right: 2%; transform: rotate(-12deg); }
 .proj .bubbles { position: absolute; right: 46px; top: 44px; width: 190px; opacity: 0.3; }
+/* hometongue: waveform */
+.proj .wavebars { position: absolute; right: 48px; top: 50%; width: 230px; transform: translateY(-50%); opacity: 0.3; }
+.proj-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
 .proj-head { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
 .proj-name {
@@ -324,6 +326,7 @@ a.proj-name:hover { color: var(--accent); text-decoration: none; }
   .proj .gword { font-size: 90px; right: -10px; bottom: -24px; opacity: 0.6; }
   .proj .rings { right: -60px; opacity: 0.12; }
   .proj .bubbles { right: -40px; opacity: 0.14; }
+  .proj .wavebars { right: -50px; opacity: 0.14; }
   .xcard { padding: 14px; gap: 12px; }
   #chatpanel { right: 10px; left: 10px; width: auto; bottom: 84px; }
   .foot-hint { display: none; }

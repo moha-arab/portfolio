@@ -50,8 +50,8 @@
     {
       id: "projects",
       match: ["projects", "built", "portfolio", "made", "work on", "building", "shipped", "created"],
-      reply: "two main ones:\n• jinto.gg, an AI coach that talks you through your valorant games\n• YapStage, 1v1 video debates scored by an AI judge\n\nboth real, both his",
-      actions: [["jinto.gg", "projects/jinto"], ["YapStage", "projects/yapstage"]],
+      reply: "three of them:\n• jinto.gg, an AI coach that talks you through your valorant games\n• YapStage, 1v1 video debates scored by an AI judge (live at yapstage.com)\n• HomeTongue, speak and it guesses your arabic dialect\n\nall real, all his",
+      actions: [["jinto.gg", "projects/jinto"], ["YapStage", "projects/yapstage"], ["HomeTongue", "projects/hometongue"]],
       chips: ["what's his stack?", "is he looking for work?"],
     },
     {
@@ -67,6 +67,13 @@
       reply: "YapStage is 1v1 video debates with an AI judge. live video over webrtc, and an LLM scores structure, evidence and rebuttals. launched public, pivoted to private lobbies when concurrent users were thin. he tells that story honestly, which i respect",
       actions: [["open YapStage", "projects/yapstage"]],
       chips: ["tell me about jinto", "how do i contact him?"],
+    },
+    {
+      id: "hometongue",
+      match: ["hometongue", "home tongue", "dialect", "accent", "arabic", "whisper", "lahja"],
+      reply: "HomeTongue: you speak a few sentences and it guesses your arabic dialect. browser records you, whisper transcribes, claude reads the phrasing and makes the call. the code is public on his github, and hometongue.me goes live soon",
+      actions: [["open HomeTongue", "projects/hometongue"]],
+      chips: ["what else has he built?", "what's his stack?"],
     },
     {
       id: "experience",
@@ -99,7 +106,7 @@
     {
       id: "contact",
       match: ["contact", "email", "reach", "phone", "call", "message", "touch", "linkedin", "github"],
-      reply: "email is the way: mohd.e.arab@gmail.com. his github is github.com/moha-arab, and everything else is on the hello tab",
+      reply: "email is the way: mohd.e.arab@gmail.com. github is github.com/moha-arab, linkedin is linkedin.com/in/mohammadearab, and everything else is on the hello tab",
       actions: [["email him", "mailto"], ["hello tab", "hello"]],
       chips: ["is he looking for work?"],
     },

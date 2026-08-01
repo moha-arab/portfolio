@@ -11,8 +11,7 @@ const PROFILE = {
   now: "currently building jinto.gg · looking for my next co-op term",
   email: "mohd.e.arab@gmail.com",
   github: "https://github.com/moha-arab",
-  // paste your LinkedIn PROFILE url (linkedin.com/in/...) between the quotes:
-  linkedin: "",
+  linkedin: "https://www.linkedin.com/in/mohammadearab/",
   // when you have a resume pdf, drop it in assets/ and put the path here,
   // e.g. "assets/resume.pdf" — the button switches from email to download:
   resume: "",
@@ -75,13 +74,25 @@ const PROJECTS = [
   {
     id: "yapstage",
     name: "YapStage",
-    link: "", // paste the YapStage url here when you send it
+    link: "https://yapstage.com",
     status: "live",
     tagline: "1v1 video debates, judged by AI",
     desc: "Two people, one topic, live video over WebRTC, and an AI judge that scores structure, evidence and rebuttals. Launched with public matchmaking, then pivoted to private lobbies when the concurrent-user math didn't work yet.",
     footnote: "live · private lobbies · cold-start lessons included free",
     stack: ["WebRTC", "Node.js", "TURN", "LLM judging"],
     theme: { accent: "#9d8cff", bg: "#0d0a1a", ghost: "VS", motif: "stage" },
+  },
+  {
+    id: "hometongue",
+    name: "HomeTongue",
+    link: "", // paste https://hometongue.me here once the domain is connected
+    repo: "https://github.com/moha-arab/hometongue",
+    status: "launching soon",
+    tagline: "speak, and it guesses your dialect",
+    desc: "Record a few sentences in the browser and it places your Arabic dialect. MediaRecorder captures the audio, Whisper turns it into text, and Claude reads the word choices and phrasing to make the call. Works from a phone, which is where families actually argue about this.",
+    footnote: "built · hometongue.me secured · connecting the domain next",
+    stack: ["MediaRecorder", "Groq Whisper", "Claude API", "Vercel"],
+    theme: { accent: "#3ecf8e", bg: "#07130d", ghost: "لهجة", motif: "wave" },
   },
 ];
 
