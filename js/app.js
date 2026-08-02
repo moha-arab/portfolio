@@ -37,12 +37,15 @@
     const resumeBtn = p.resume
       ? `<a class="btn ghost" href="${esc(p.resume)}" download>resume (pdf)</a>`
       : `<a class="btn ghost" href="mailto:${esc(p.email)}?subject=${encodeURIComponent("resume, please")}" title="pdf coming soon — email gets you the current one">resume · email me</a>`;
+    const stats = (p.stats || []).map(([n, l]) => `<div class="stat"><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("");
+    const seq = (p.ticker || []).join("&nbsp;&nbsp;·&nbsp;&nbsp;");
     return `
       <div class="hero">
         <div class="hero-text">
-          <h1>${esc(p.name)}<span class="dot">.</span></h1>
+          <h1><span id="typed"></span><span class="dot caret">.</span></h1>
           <p class="tagline">${esc(p.tagline)}</p>
           <p class="nowline"><span class="live"></span>${esc(p.now)}</p>
+          <div class="stats">${stats}</div>
           <dl class="spec">
             <dt>email</dt><dd><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></dd>
             <dt>github</dt><dd><a href="${esc(p.github)}" target="_blank" rel="noopener">${esc(p.github.replace(/^https?:\/\//, ""))}</a></dd>
@@ -60,7 +63,8 @@
           </div>
         </div>
         <div class="photo-wrap"><img class="photo" src="${esc(p.photo)}" alt="${esc(p.name)}"></div>
-      </div>`;
+      </div>
+      <div class="ticker" aria-hidden="true"><div class="ticker-track">${(seq + "&nbsp;&nbsp;·&nbsp;&nbsp;").repeat(3)}</div></div>`;
   }
 
   function experiencePane() {
@@ -99,10 +103,16 @@
       proj.repo ? `<a class="btn ghost" href="${esc(proj.repo)}" target="_blank" rel="noopener">view code ↗</a>` : "",
       !proj.link && !proj.repo ? `<a class="btn ghost" href="mailto:${esc(PROFILE.email)}?subject=${encodeURIComponent("show me " + proj.name)}">ask for a demo</a>` : "",
     ].join("");
+    const idx = PROJECTS.indexOf(proj);
     return `
       <h2>projects</h2>
       <div class="proj-switch" role="tablist">
         ${PROJECTS.map((p) => `<button class="proj-tab${p.id === proj.id ? " on" : ""}" data-project="${p.id}">${esc(p.name)}</button>`).join("")}
+        <div class="proj-nav">
+          <button class="pnav" data-dir="-1" aria-label="previous project">←</button>
+          <span class="pcount">0${idx + 1} / 0${PROJECTS.length}</span>
+          <button class="pnav" data-dir="1" aria-label="next project">→</button>
+        </div>
       </div>
       <article class="proj proj--${esc(proj.id)}">
         <div class="art" aria-hidden="true">${art}<span class="gword">${esc(t.ghost)}</span></div>
@@ -153,8 +163,49 @@
     if (id === "projects") {
       view.querySelectorAll(".proj-tab").forEach((b) =>
         b.addEventListener("click", () => showTab("projects", b.dataset.project)));
+      view.querySelectorAll(".pnav").forEach((b) =>
+        b.addEventListener("click", () => {
+          const i = PROJECTS.findIndex((p) => p.id === currentProject);
+          const next = PROJECTS[(i + Number(b.dataset.dir) + PROJECTS.length) % PROJECTS.length];
+          showTab("projects", next.id);
+        }));
     }
+    if (id === "hello") typeName();
+    // cursor-tracking spotlight on the big surfaces
+    view.querySelectorAll(".spec, .xcard, .proj").forEach((el) => {
+      el.classList.add("spot");
+      el.addEventListener("mousemove", (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+        el.style.setProperty("--my", (e.clientY - r.top) + "px");
+      });
+    });
+    placeTabInd();
   }
+
+  function typeName() {
+    const el = view.querySelector("#typed");
+    if (!el) return;
+    const name = PROFILE.name;
+    if (sessionStorage.getItem("typed") || reduced.matches) { el.textContent = name; return; }
+    let i = 0;
+    const iv = setInterval(() => {
+      if (!el.isConnected) return clearInterval(iv);
+      el.textContent = name.slice(0, ++i);
+      if (i >= name.length) { clearInterval(iv); sessionStorage.setItem("typed", "1"); }
+    }, 52);
+  }
+
+  /* sliding indicator behind the active tab */
+  const tabInd = document.createElement("i");
+  tabInd.id = "tab-ind";
+  function placeTabInd() {
+    const on = tabsEl.querySelector(".tab.on");
+    if (!on) return;
+    tabInd.style.left = on.offsetLeft + "px";
+    tabInd.style.width = on.offsetWidth + "px";
+  }
+  addEventListener("resize", placeTabInd);
   window.showTab = showTab;
 
   TABS.forEach((t, i) => {
@@ -165,6 +216,21 @@
     b.addEventListener("click", () => showTab(t.id));
     tabsEl.appendChild(b);
   });
+  tabsEl.appendChild(tabInd);
+  setTimeout(placeTabInd, 250); // again once the mono font has loaded
+
+  /* one-time chat nudge bubble */
+  setTimeout(() => {
+    if (localStorage.getItem("fabtip") || !document.getElementById("chatpanel").hidden) return;
+    localStorage.setItem("fabtip", "1");
+    const tip = document.createElement("div");
+    tip.id = "fabtip";
+    tip.textContent = "ask me anything about mohammad";
+    document.body.appendChild(tip);
+    const kill = () => tip.remove();
+    tip.addEventListener("click", () => { kill(); window.Chat && Chat.open(); });
+    setTimeout(kill, 7000);
+  }, 6000);
 
   document.addEventListener("keydown", (e) => {
     const t = e.target;

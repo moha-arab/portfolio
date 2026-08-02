@@ -23,6 +23,15 @@ const PROFILE = {
     campus: "Kingston, Ontario",
   },
   location: "based in Kingston, ON · open to working anywhere",
+  // the big numbers under the tagline
+  stats: [
+    ["3", "projects shipped"],
+    ["3", "work terms"],
+    ["4.04", "gpa / 4.30"],
+    ["'28", "graduating"],
+  ],
+  // words in the scrolling ticker — edit freely
+  ticker: ["python", "typescript", "react", "next.js", "node", "rag pipelines", "llm apis", "webrtc", "postgres", "aws", "docker", "queen's cs '28"],
 };
 
 const EXPERIENCE = [
@@ -85,12 +94,12 @@ const PROJECTS = [
   {
     id: "hometongue",
     name: "HomeTongue",
-    link: "", // paste https://hometongue.me here once the domain is connected
+    link: "https://hometongue.me",
     repo: "https://github.com/moha-arab/hometongue",
-    status: "launching soon",
+    status: "live",
     tagline: "speak, and it guesses your dialect",
     desc: "Record a few sentences in the browser and it places your Arabic dialect. MediaRecorder captures the audio, Whisper turns it into text, and Claude reads the word choices and phrasing to make the call. Works from a phone, which is where families actually argue about this.",
-    footnote: "built · hometongue.me secured · connecting the domain next",
+    footnote: "live at hometongue.me · code is public",
     stack: ["MediaRecorder", "Groq Whisper", "Claude API", "Vercel"],
     theme: { accent: "#3ecf8e", bg: "#07130d", ghost: "لهجة", motif: "wave" },
   },
